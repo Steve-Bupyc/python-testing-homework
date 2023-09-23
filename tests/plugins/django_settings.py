@@ -51,3 +51,12 @@ def cache(settings: LazySettings) -> BaseCache:
     # Clearing cache:
     caches[test_cache].clear()
     return caches[test_cache]
+
+
+@pytest.fixture()
+def _json_server_placeholder_api(settings: LazySettings) -> None:
+    """Replace PLACEHOLDER_API_URL to json-server."""
+    previous_placeholder_api_url = settings.PLACEHOLDER_API_URL
+    settings.PLACEHOLDER_API_URL = 'http://json-server:3000/'
+    yield
+    settings.PLACEHOLDER_API_URL = previous_placeholder_api_url
